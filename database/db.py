@@ -36,6 +36,16 @@ def init_db():
     conn.close()
 
 
+def create_user(username, email, password_hash):
+    conn = get_db()
+    conn.execute(
+        "INSERT INTO users (username, email, password_hash) VALUES (?, ?, ?)",
+        (username, email, password_hash),
+    )
+    conn.commit()
+    conn.close()
+
+
 def seed_db():
     conn = get_db()
     if conn.execute("SELECT COUNT(*) FROM users").fetchone()[0] > 0:
